@@ -18,7 +18,7 @@ import { errorMiddleware } from "./middleware/error.js";
 configDotenv();
 
 export const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY!);
-const port = 3000;
+const port = 8080;
 const app = express();
 connectDb();
 
