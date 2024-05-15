@@ -1,5 +1,5 @@
 import { configDotenv } from "dotenv";
-import express from "express";
+import express, { Request, Response } from "express";
 import { connectDb } from "./utils/connectdb.js";
 import cors from "cors";
 import morgan from "morgan";
@@ -28,6 +28,9 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 
 //routes
+app.get("/", (req: Request, res: Response) => {
+  res.send("Api working!");
+});
 app.use("/auth", authRouter);
 app.use("/product", productRouter);
 app.use("/cart", cartRouter);
