@@ -83,15 +83,12 @@ const profileController = async (
       User.findById(req.userId),
     ]);
 
-    if (!cart) {
-      return next(new ErrorHandler("Cart is Empty", 404));
-    }
     return res.status(200).json({
       success: true,
       message: "User Retrieved Successfully",
       data: {
         user: user,
-        cart: cart,
+        cart: cart ? cart : [],
       },
     });
   } catch (error) {
