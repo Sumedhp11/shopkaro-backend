@@ -22,7 +22,11 @@ const port = 8080;
 const app = express();
 connectDb();
 
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
