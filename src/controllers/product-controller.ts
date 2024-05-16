@@ -60,5 +60,38 @@ const getAllCategories = async (
     return next(new ErrorHandler("Internal Error", 500));
   }
 };
+const getRandomProducts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const totalCount = await Product.countDocuments();
+    console.log(totalCount, "total Count");
 
-export { getAllProducts, getAllCategories };
+    const randomIndexes: number[] = [];
+    const maxIndex = totalCount - 10;
+
+    while (randomIndexes.length < 10) {
+      const randomIndex = Math.floor(Math.random() * maxIndex + 1);
+      if (!randomIndexes.includes(randomIndex)) {
+        randomIndexes.push(randomIndex);
+      }
+    }
+
+    const randomProducts = await Product.find()
+      .skip(randomIndexes[0])
+      .limit(10);
+
+    return res.status(200).json({
+      success: true,
+      message: "Products Retrieved Successfully",
+      data: randomProducts,
+    });
+  } catch (error) {
+    console.log(error);
+    return next(new ErrorHandler("Internal Error", 500));
+  }
+};
+
+export { getAllProducts, getAllCategories, getRandomProducts };

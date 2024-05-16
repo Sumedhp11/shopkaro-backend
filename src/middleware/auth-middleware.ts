@@ -13,7 +13,6 @@ const isAuthenticated = (
   next: NextFunction
 ) => {
   const token = req.cookies["shopkaro-token"];
-  console.log(token);
 
   if (!token) {
     return next(
