@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 const cookieOption: CookieOptions = {
   httpOnly: true,
   secure: true,
-  sameSite: "none",
 };
 
 const sendToken = (
