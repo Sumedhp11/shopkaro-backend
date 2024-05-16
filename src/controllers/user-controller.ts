@@ -90,8 +90,8 @@ const profileController = async (
       success: true,
       message: "User Retrieved Successfully",
       data: {
-        user,
-        cart,
+        user: user,
+        cart: cart,
       },
     });
   } catch (error) {
