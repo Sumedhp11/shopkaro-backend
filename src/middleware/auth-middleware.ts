@@ -13,6 +13,8 @@ const isAuthenticated = (
   next: NextFunction
 ) => {
   const token = req.cookies["shopkaro-token"];
+  console.log(token);
+
   if (!token) {
     return next(
       new ErrorHandler("You are Not Authenticated , Please Login!", 401)
