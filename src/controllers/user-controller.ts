@@ -5,6 +5,8 @@ import User from "../models/user-model.js";
 import bcrypt from "bcryptjs";
 
 import { sendToken } from "../utils/helpers.js";
+import Cart from "../models/cart-model.js";
+import { AuthenticatedInterface } from "../middleware/auth-middleware.js";
 
 const signupController = async (
   req: Request,
@@ -71,19 +73,26 @@ const signinController = async (
 };
 
 const profileController = async (
-  req: Request,
+  req: AuthenticatedInterface,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    // const cart = await Cart.findOne({ userId: req.userId });
-    // if (!cart) {
-    //   return next(new ErrorHandler("Cart is Empty", 404));
-    // }
+    const [cart, user] = await Promise.all([
+      Cart.findOne({ userId: req.userId }),
+      User.findById(req.userId),
+    ]);
+
+    if (!cart) {
+      return next(new ErrorHandler("Cart is Empty", 404));
+    }
     return res.status(200).json({
       success: true,
-      message: "Cart Retrieved Successfully",
-      // data: cart,
+      message: "User Retrieved Successfully",
+      data: {
+        user,
+        cart,
+      },
     });
   } catch (error) {
     return next(new ErrorHandler("Internal Error", 500));
