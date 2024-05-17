@@ -16,14 +16,17 @@ const getAllProducts = async (
 
     const limit = 10;
     const startIndex = (page - 1) * limit;
-    const products = await Product.find({
-      ...(searchQuery
-        ? { Product_name: { $regex: new RegExp(searchQuery, "i") } }
-        : {}),
-      ...(categoryId ? { categoryId: categoryId } : {}),
-    })
-      .skip(startIndex)
-      .limit(limit);
+    const [products, TotalDocs] = await Promise.all([
+      Product.find({
+        ...(searchQuery
+          ? { Product_name: { $regex: new RegExp(searchQuery, "i") } }
+          : {}),
+        ...(categoryId ? { categoryId: categoryId } : {}),
+      })
+        .skip(startIndex)
+        .limit(limit),
+      Product.countDocuments(),
+    ]);
 
     if (!products || products.length < 1) {
       return next(new ErrorHandler("No Products Found", 404));
@@ -31,7 +34,7 @@ const getAllProducts = async (
     return res.status(200).json({
       success: true,
       message: "All Products Retrieved Successfully",
-      data: products,
+      data: { products, TotalDocs },
     });
   } catch (error) {
     console.log(error);
