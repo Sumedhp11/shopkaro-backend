@@ -68,7 +68,7 @@ const getCartbyUserId = async (
 
     const savedCart = await Cart.findOne({
       userId,
-    });
+    }).populate({ path: "items.productId", model: "Product" });
 
     if (!savedCart)
       return res.status(200).json({
