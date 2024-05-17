@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ErrorHandler } from "../utils/ErrorClass.js";
 import Cart from "../models/cart-model.js";
+import { ProductInterface } from "../interfaces/ProductsInterface.js";
 
 const addtoCart = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -76,10 +77,16 @@ const getCartbyUserId = async (
         message: "No Cart Found",
         data: [],
       });
+    const totalAmount = savedCart.items.reduce((total, item) => {
+      const product: any = item.productId;
+
+      return total + product.Price * item.quantity;
+    }, 0);
     return res.status(200).json({
       success: true,
       message: "Cart Retrieved Successfully",
       data: savedCart,
+      totalAmount,
     });
   } catch (error) {
     console.log(error);
