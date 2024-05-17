@@ -85,7 +85,7 @@ const getCartbyUserId = async (
     return res.status(200).json({
       success: true,
       message: "Cart Retrieved Successfully",
-      data: { savedCart, totalAmount },
+      data: { cart: savedCart, totalAmount },
     });
   } catch (error) {
     console.log(error);
