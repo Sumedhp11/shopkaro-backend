@@ -1,9 +1,9 @@
-import { CookieOptions, Request, Response } from "express";
+import { CookieOptions, Response, Request } from "express";
 import { UserInterface } from "../interfaces/UserInterface.js";
 import jwt from "jsonwebtoken";
 
 const sendToken = (
-  req: Request,
+  req: Request, // Add req parameter to access request headers
   res: Response,
   user: UserInterface,
   statusCode: number,
@@ -11,11 +11,15 @@ const sendToken = (
 ) => {
   const origin = req.get("Origin");
   const isLocalhost = origin?.includes("localhost");
+
   const cookieOption: CookieOptions = {
+    maxAge: 15 * 24 * 60 * 60 * 1000,
     httpOnly: true,
     secure: !isLocalhost,
   };
+
   const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET!);
+
   return res
     .status(statusCode)
     .cookie("shopkaro-token", token, cookieOption)
