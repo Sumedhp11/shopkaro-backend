@@ -65,7 +65,13 @@ const signinController = async (
     if (!pwMatch) {
       return next(new ErrorHandler("Invalid Credentials", 400));
     }
-    sendToken(res, existingUser, 200, `Welcome Back ${existingUser.fullName}`);
+    sendToken(
+      req,
+      res,
+      existingUser,
+      200,
+      `Welcome Back ${existingUser.fullName}`
+    );
   } catch (error) {
     console.log(error);
     return next(new ErrorHandler("Internal Server Error", 500));
