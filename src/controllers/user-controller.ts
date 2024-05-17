@@ -4,7 +4,7 @@ import { ErrorHandler } from "../utils/ErrorClass.js";
 import User from "../models/user-model.js";
 import bcrypt from "bcryptjs";
 
-import { sendToken } from "../utils/helpers.js";
+import { cookieOption, sendToken } from "../utils/helpers.js";
 import Cart from "../models/cart-model.js";
 import { AuthenticatedInterface } from "../middleware/auth-middleware.js";
 
@@ -101,4 +101,19 @@ const profileController = async (
     return next(new ErrorHandler("Internal Error", 500));
   }
 };
-export { signupController, signinController, profileController };
+
+const logoutController = async (req: Request, res: Response) => {
+  return res
+    .status(200)
+    .cookie("shopkaro-token", "", { ...cookieOption, maxAge: 0 })
+    .json({
+      success: true,
+      message: "Logged out successfully",
+    });
+};
+export {
+  signupController,
+  signinController,
+  profileController,
+  logoutController,
+};

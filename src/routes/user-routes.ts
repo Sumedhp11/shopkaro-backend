@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  logoutController,
   profileController,
   signinController,
   signupController,
@@ -14,5 +15,6 @@ Router.post("/sign-in", signinController);
 // with middleware
 Router.use(isAuthenticated);
 Router.get("/me", profileController);
+Router.get("/logout", logoutController);
 
 export default Router;
