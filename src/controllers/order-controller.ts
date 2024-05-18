@@ -4,13 +4,14 @@ import Order from "../models/order-model.js";
 
 const newOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { userId, items, totalAmount } = req.body;
+    const { userId, items, totalAmount, shippingAddress } = req.body;
     if (!userId) return next(new ErrorHandler("Provide UserId", 400));
 
     const newOrder = new Order({
       userId,
       items,
       totalAmount,
+      shippingAddress,
     });
     const savednewOrder = await newOrder.save();
     return res.status(201).json({

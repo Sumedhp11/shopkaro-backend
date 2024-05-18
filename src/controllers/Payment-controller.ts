@@ -9,6 +9,8 @@ const createIntent = async (
 ) => {
   try {
     const { amount } = req.body;
+    console.log(amount);
+
     if (!amount) return next(new ErrorHandler("Please enter amount", 400));
     const paymentIntent = await stripeInstance.paymentIntents.create({
       amount: Number(amount),

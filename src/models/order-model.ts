@@ -18,6 +18,10 @@ const orderSchema = new Schema<OrderInterface>(
       type: Number,
       required: true,
     },
+    shippingAddress: {
+      type: String,
+      required: true,
+    },
     deliveryStatus: {
       type: String,
       required: true,

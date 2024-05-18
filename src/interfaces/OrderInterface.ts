@@ -5,6 +5,7 @@ export interface OrderInterface {
   items: OrderItem[];
   totalAmount: number;
   deliveryStatus: string;
+  shippingAddress: string;
 }
 
 export interface OrderItem {
