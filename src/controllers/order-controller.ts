@@ -12,6 +12,7 @@ const newOrder = async (req: Request, res: Response, next: NextFunction) => {
       items,
       totalAmount,
       shippingAddress,
+      deliveryStatus: "Placed",
     });
     const savednewOrder = await newOrder.save();
     return res.status(201).json({
