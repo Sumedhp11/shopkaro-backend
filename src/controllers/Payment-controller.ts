@@ -14,7 +14,7 @@ const createIntent = async (
     if (!amount) return next(new ErrorHandler("Please enter amount", 400));
     const paymentIntent = await stripeInstance.paymentIntents.create({
       amount: Number(amount),
-      currency: "usd",
+      currency: "inr",
     });
     return res.status(201).json({
       success: true,
