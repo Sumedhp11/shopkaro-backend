@@ -15,6 +15,7 @@ const createIntent = async (
     const paymentIntent = await stripeInstance.paymentIntents.create({
       amount: Number(amount),
       currency: "inr",
+      description: "Payment Of Online Shopping",
     });
     return res.status(201).json({
       success: true,
