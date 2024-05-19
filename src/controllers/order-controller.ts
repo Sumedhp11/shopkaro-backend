@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ErrorHandler } from "../utils/ErrorClass.js";
 import Order from "../models/order-model.js";
+import Cart from "../models/cart-model.js";
 
 const newOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -43,6 +44,10 @@ const getOrderByUserId = async (
         message: "Order Retrivied Successully",
         data: [],
       });
+    }
+    if (savedorder) {
+      const savedCart = await Cart.findOneAndDelete({ userId });
+      await savedCart?.save();
     }
     return res.status(200).json({
       success: true,
