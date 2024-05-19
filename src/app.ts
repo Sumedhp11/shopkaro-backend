@@ -20,15 +20,15 @@ configDotenv();
 export const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY!);
 const port = 8080;
 const app = express();
-connectDb();
-
 app.use(
   cors({
     origin: ["http://localhost:5173", "https://shopkaro-frontend.vercel.app/"],
-
     credentials: true,
   })
 );
+app.options("*", cors());
+connectDb();
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
