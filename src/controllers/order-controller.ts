@@ -35,7 +35,7 @@ const getOrderByUserId = async (
   try {
     const { userId } = req.params;
     if (!userId) return next(new ErrorHandler("Provide UserId", 400));
-    const savedorder = await Order.findOne({
+    const savedorder = await Order.find({
       userId,
     }).populate({ path: "items.productId", model: "Product" });
     if (!savedorder) {
@@ -45,6 +45,8 @@ const getOrderByUserId = async (
         data: [],
       });
     }
+    console.log(savedorder);
+
     if (savedorder) {
       const savedCart = await Cart.findOneAndDelete({ userId });
       await savedCart?.save();
