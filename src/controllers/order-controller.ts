@@ -37,7 +37,7 @@ const getOrderByUserId = async (
     if (!userId) return next(new ErrorHandler("Provide UserId", 400));
     const savedorder = await Order.findOne({
       userId,
-    });
+    }).populate({ path: "items.productId", model: "Product" });
     if (!savedorder) {
       return res.status(200).json({
         success: true,
