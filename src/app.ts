@@ -17,17 +17,17 @@ import orderRouter from "./routes/order-routes.js";
 import { errorMiddleware } from "./middleware/error.js";
 configDotenv();
 
+connectDb();
 export const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY!);
 const port = 8080;
 const app = express();
 app.use(
   cors({
     origin: ["http://localhost:5173", "https://shopkaro-frontend.vercel.app/"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
-app.options("*", cors());
-connectDb();
 
 app.use(express.json());
 app.use(cookieParser());
